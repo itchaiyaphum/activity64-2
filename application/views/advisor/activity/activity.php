@@ -27,12 +27,14 @@
                             <th>หน้าเสาธง</th>
                             <th>ชมรม</th>
                             <th>โฮมรูม</th>
-                            <th>ลูกเสือ</th>
-                            <th>กิจกรรมพิเสษ</th>
+                            <?php if ($group->group_name[0] === 'A') { ?>
+                                <th>ลูกเสือ</th>
+                            <?php } ?>
+                            <th>กิจกรรมพิเศษ</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <form id="form" method="post" action="<?= site_url($this->session->user_type.'/activity_summary/advisor_save').'?group_id='.$this->input->get('group_id').'&semester_id='.$this->input->get('semester_id') ?>" class="uk-form">
+                        <form id="form" method="post" action="<?= site_url($this->session->user_type . '/activity_summary/advisor_save') . '?group_id=' . $this->input->get('group_id') . '&semester_id=' . $this->input->get('semester_id') ?>" class="uk-form">
                             <?php
                             foreach ($group->students as $key => $std) {
                             ?>
@@ -99,23 +101,6 @@
                                     <td>
                                         <div class="uk-form-controls uk-form-controls-text">
                                             <?php
-                                            if (isset($std->boy_scout)) {
-                                                if ($std->boy_scout == 0) {
-                                                    $boy_scout = false;
-                                                } else {
-                                                    $boy_scout = true;
-                                                }
-                                            } else {
-                                                $boy_scout = true;
-                                            }
-                                            ?>
-                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="1" <?= $boy_scout === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
-                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="0" <?= $boy_scout === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="uk-form-controls uk-form-controls-text">
-                                            <?php
                                             if (isset($std->special)) {
                                                 if ($std->special == 0) {
                                                     $special = false;
@@ -130,6 +115,25 @@
                                             <label><input class="uk-radio" type="radio" name="special[<?= $std->user_id; ?>]" value="0" <?= $special === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
                                         </div>
                                     </td>
+                                    <?php if ($group->group_name[0] === 'A') { ?>
+                                        <td>
+                                            <div class="uk-form-controls uk-form-controls-text">
+                                                <?php
+                                                if (isset($std->boy_scout)) {
+                                                    if ($std->boy_scout == 0) {
+                                                        $boy_scout = false;
+                                                    } else {
+                                                        $boy_scout = true;
+                                                    }
+                                                } else {
+                                                    $boy_scout = true;
+                                                }
+                                                ?>
+                                                <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="1" <?= $boy_scout === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                                <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="0" <?= $boy_scout === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
+                                            </div>
+                                        </td>
+                                    <?php } ?>
                                 </tr>
                             <?php
                             }
