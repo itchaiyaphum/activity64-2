@@ -611,3 +611,45 @@ ALTER TABLE `users_staff`
 
 ALTER TABLE `users_staff`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
+############################ TABLE: activity_summary_actions ##############################
+CREATE TABLE `activity_summary_actions` (
+  `id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `semester_id` int(11) NOT NULL,
+  `user_type` varchar(15) NOT NULL,
+  `action_status` varchar(15) NOT NULL,
+  `activity` varchar(15) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `activity_summary_actions`
+  ADD PRIMARY KEY (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
+############################ TABLE: activity_summary_items ##############################
+CREATE TABLE `activity_summary_items` (
+  `id` int(11) NOT NULL,
+  `semester_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `flagpole` int(1) COMMENT 'กิจกรรม หน้าเสาธง',
+  `club` int(1) COMMENT 'กิจกรรม ชมรม',
+  `homeroom` int(1) COMMENT 'กิจกรรม โฮมรูม',
+  `special` int(1) COMMENT 'กิจกรรม พิเศษ',
+  `boy_scout` int(1) COMMENT 'กิจกรรม ลูกเสือ',
+  `TROTCS` int(1) COMMENT 'กิจกรรม รด.',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `activity_summary_items`
+  ADD PRIMARY KEY (`id`),
+  MODIFY `student_id` INT NOT NULL,
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
+  ADD CONSTRAINT UQ_Semester_Student UNIQUE(`semester_id`, `student_id`);
