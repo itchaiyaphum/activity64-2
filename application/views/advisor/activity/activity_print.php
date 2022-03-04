@@ -49,13 +49,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>กิจกรรม<br>ชมรม</th>
                     <th>กิจกรรม<br>โฮมรูม</th>
                     <th>กิจกรรม<br>พิเศษ</th>
-                    <th>กิจกรรม<br>ลูกเสือ</th>
+                    <?php if ($data->group_name[0] === 'A') { ?>
+                        <th>กิจกรรม<br>ลูกเสือ</th>
+                    <?php } ?>
                     <th>กิจกรรม<br>รด.</th>
                     <th>บันทึกพิเศษ</th>
                     <th colspan="2">ผลการประเมิน</th>
                 </tr>
                 <tr>
-                    <th colspan="7" style="text-align: left;">
+                    <th colspan="<?= $data->group_name[0] === 'A' ? '7' : '6' ?>" style="text-align: left;">
                         &nbsp;(&nbsp;&nbsp;) บันทึกกาารเข้าร่วมกิจกรรมของชมรม<br>
                         &nbsp;(&nbsp;&nbsp;) หนังสือรับรองการเข้าร่วมกิจกรรม จากหน่วยงานสังกัดหรือหน่วยงานอื่นๆ
                     </th>
@@ -121,15 +123,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             }
                             ?>
                         </td>
-                        <td>
-                            <?php
-                            if ($std->boy_scout === '1') {
-                                echo "ผ.";
-                            } elseif ($std->boy_scout === '0') {
-                                echo "<span style='color: #dc3545;'>มผ.</span>";
-                            }
-                            ?>
-                        </td>
+                        <?php if ($data->group_name[0] === 'A') { ?>
+                            <td>
+                                <?php
+                                if ($std->boy_scout === '1') {
+                                    echo "ผ.";
+                                } elseif ($std->boy_scout === '0') {
+                                    echo "<span style='color: #dc3545;'>มผ.</span>";
+                                }
+                                ?>
+                            </td>
+                        <?php } ?>
                         <td>
                             <?php
                             if ($std->TROTCS === '1') {
