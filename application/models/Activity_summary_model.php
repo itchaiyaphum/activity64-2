@@ -161,10 +161,10 @@ class Activity_summary_model extends CI_Model
         return $data;
     }
 
-    public function AdvisorIndedxButton($group_id, $semester_id)
+    public function AdvisorIndedxButton($group_id, $semester_id, $user_type = 'advisor')
     {
         $check = $this->_SaveCheck($group_id, $semester_id, 'advisor_check');
-        $link = site_url('advisor/activity_summary/activity')."?group_id={$group_id}&semester_id={$semester_id}";
+        $link = site_url($user_type.'/activity_summary/activity')."?group_id={$group_id}&semester_id={$semester_id}";
         if (isset($check->id)) {
             if ($check->action_status == 'save') {
                 return "<a href='{$link}' class='uk-button uk-button-success uk-button-small'><i class='uk-icon-eye'></i> เรียกดูข้อมูล</a>";
@@ -175,7 +175,7 @@ class Activity_summary_model extends CI_Model
             return "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
         }
     }
-    public function AdvisorSaveButton($group_id, $semester_id)
+    public function AdvisorSaveButton($group_id, $semester_id, $user_type = 'advisor')
     {
         $check = $this->_SaveCheck($group_id, $semester_id, 'advisor_check');
         if (isset($check->id)) {
@@ -189,10 +189,10 @@ class Activity_summary_model extends CI_Model
         }
     }
 
-    public function PrintButton($group_id, $semester_id)
+    public function PrintButton($group_id, $semester_id, $user_type = 'advisor')
     {
         $check = $this->_SaveCheck($group_id, $semester_id, 'advisor_check');
-        $link = site_url('advisor/activity_summary/report')."?group_id={$group_id}&semester_id={$semester_id}";
+        $link = site_url($user_type.'/activity_summary/report')."?group_id={$group_id}&semester_id={$semester_id}";
         if (isset($check->id)) {
             if ($check->action_status == 'save') {
                 return "<a href='{$link}' class='uk-button uk-button-small' target='_blank'><i class='uk-icon-print'></i> พิมพ์ อวท.15</a>";
