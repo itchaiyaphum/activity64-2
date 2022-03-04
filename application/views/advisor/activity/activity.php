@@ -13,9 +13,10 @@
             <h2 class="uk-alert uk-alert-primary">
                 <?= $semester->name ?>
             </h2>
-            <div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
+            <div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top uk-overflow-container">
                 <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group->group_name . ' / ' . $group->minor_name . ' / ' . $group->major_name; ?></h3>
                 <hr />
+                <!-- <table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1" style="min-width: 900px"> -->
                 <table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
                     <thead>
                         <tr>
@@ -27,16 +28,17 @@
                             <th>ชมรม</th>
                             <th>โฮมรูม</th>
                             <th>ลูกเสือ</th>
+                            <th>กิจกรรมพิเสษ</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <form id="form" method="post" action="<?= site_url('advisor/activity_summary/advisor_save').'?group_id='.$this->input->get('group_id').'&semester_id='.$this->input->get('semester_id') ?>" class="uk-form">
+                        <form id="form" method="post" action="<?= site_url($this->session->user_type.'/activity_summary/advisor_save').'?group_id='.$this->input->get('group_id').'&semester_id='.$this->input->get('semester_id') ?>" class="uk-form">
                             <?php
                             foreach ($group->students as $key => $std) {
                             ?>
                                 <tr>
                                     <td><?= ++$key ?></td>
-                                    <td><?= $std->student_id ?></td>
+                                    <td><?= $std->std_code ?></td>
                                     <td><?= $std->firstname ?></td>
                                     <td><?= $std->lastname ?></td>
                                     <td>
@@ -52,8 +54,8 @@
                                                 $flagpole = true;
                                             }
                                             ?>
-                                            <label><input class="uk-radio" type="radio" name="flagpole[<?= $std->user_id; ?>]" value="1" <?= $flagpole === true ? 'checked' : '' ?>> ผ.</label>
-                                            <label><input class="uk-radio" type="radio" name="flagpole[<?= $std->user_id; ?>]" value="0" <?= $flagpole === false ? 'checked' : '' ?>> มผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="flagpole[<?= $std->user_id; ?>]" value="1" <?= $flagpole === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="flagpole[<?= $std->user_id; ?>]" value="0" <?= $flagpole === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
                                         </div>
                                     </td>
                                     <td>
@@ -69,8 +71,8 @@
                                                 $club = true;
                                             }
                                             ?>
-                                            <label><input class="uk-radio" type="radio" name="club[<?= $std->user_id; ?>]" value="1" <?= $club === true ? 'checked' : '' ?>> ผ.</label>
-                                            <label><input class="uk-radio" type="radio" name="club[<?= $std->user_id; ?>]" value="0" <?= $club === false ? 'checked' : '' ?>> มผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="club[<?= $std->user_id; ?>]" value="1" <?= $club === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="club[<?= $std->user_id; ?>]" value="0" <?= $club === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
                                         </div>
                                     </td>
                                     <td>
@@ -90,8 +92,8 @@
                                                 }
                                             }
                                             ?>
-                                            <label><input class="uk-radio" type="radio" name="homeroom[<?= $std->user_id; ?>]" value="1" <?= $homeroom === true ? 'checked' : '' ?>> ผ.</label>
-                                            <label><input class="uk-radio" type="radio" name="homeroom[<?= $std->user_id; ?>]" value="0" <?= $homeroom === false ? 'checked' : '' ?>> มผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="homeroom[<?= $std->user_id; ?>]" value="1" <?= $homeroom === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="homeroom[<?= $std->user_id; ?>]" value="0" <?= $homeroom === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
                                         </div>
                                     </td>
                                     <td>
@@ -107,8 +109,25 @@
                                                 $boy_scout = true;
                                             }
                                             ?>
-                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="1" <?= $boy_scout === true ? 'checked' : '' ?>> ผ.</label>
-                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="0" <?= $boy_scout === false ? 'checked' : '' ?>> มผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="1" <?= $boy_scout === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="boy_scout[<?= $std->user_id; ?>]" value="0" <?= $boy_scout === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="uk-form-controls uk-form-controls-text">
+                                            <?php
+                                            if (isset($std->special)) {
+                                                if ($std->special == 0) {
+                                                    $special = false;
+                                                } else {
+                                                    $special = true;
+                                                }
+                                            } else {
+                                                $special = true;
+                                            }
+                                            ?>
+                                            <label><input class="uk-radio" type="radio" name="special[<?= $std->user_id; ?>]" value="1" <?= $special === true ? 'checked' : '' ?> style="accent-color: Green;">ผ.</label>
+                                            <label><input class="uk-radio" type="radio" name="special[<?= $std->user_id; ?>]" value="0" <?= $special === false ? 'checked' : '' ?> style="accent-color: Crimson;">มผ.</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -123,7 +142,7 @@
 
             <div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
                 <a class="uk-button uk-button-large uk-width-large-1-4 uk-margin-top" href="<?= site_url('advisor/activity_summary') ?>"><i class="uk-icon-home"></i> กลับหน้าหลัก</a>
-                <?= $this->activity_summary->AdvisorSaveButton($group->id, $semester->id) ?>
+                <?= $this->activity_summary->AdvisorSaveButton($group->id, $semester->id, $this->session->user_type) ?>
                 <div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                         <a class="uk-modal-close uk-close"></a>

@@ -48,12 +48,13 @@ class Activity_summary_model extends CI_Model
             }
         }
         $sql = "INSERT INTO `activity_summary_items`
-        (`semester_id`, `student_id`, `flagpole`, `club`, `homeroom`, `boy_scout`, `updated_at`)
-        VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE 
+        (`semester_id`, `student_id`, `flagpole`, `club`, `homeroom`, `special`,`boy_scout`, `updated_at`)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE 
         student_id=VALUES(student_id),
         flagpole=VALUES(flagpole),
         club=VALUES(club),
         homeroom=VALUES(homeroom),
+        special=VALUES(special),
         boy_scout=VALUES(boy_scout),
         updated_at=VALUES(updated_at)";
         foreach ($data as $data_r) {
@@ -63,6 +64,7 @@ class Activity_summary_model extends CI_Model
                 'flagpole' => $data_r['flagpole'],
                 'club' => $data_r['club'],
                 'homeroom' => $data_r['homeroom'],
+                'special' => $data_r['special'],
                 'boy_scout' => $data_r['boy_scout'],
                 'updated_at' => $data_r['updated_at']
             );
@@ -129,7 +131,7 @@ class Activity_summary_model extends CI_Model
     }
     public function _students_list($group_id, $semester_id)
     {
-        $sql = "SELECT `users_student`.`user_id`,`users_student`.`firstname`,`users_student`.`lastname`,`users_student`.`student_id`,
+        $sql = "SELECT `users_student`.`user_id`,`users_student`.`firstname`,`users_student`.`lastname`,`users_student`.`student_id` as std_code,
         `activity_summary_items`.*
         FROM `users_student`
         LEFT JOIN `activity_summary_items` 

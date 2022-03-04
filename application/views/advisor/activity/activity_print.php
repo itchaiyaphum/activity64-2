@@ -69,7 +69,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 ob_end_flush();
                 $n = 0;
                 foreach ($data->students as $key => $std) {
-                    if ($n == 17) {
+                    if ($n == 16) {
                         echo "
                                 </tbody>
                             </table>
@@ -146,6 +146,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <?php } ?>
             </tbody>
         </table>
+
+        <table class="sign-table">
+            <tr>
+                <td>
+                    <div class="sign">
+                        ลงชื่อ................................................................
+                        นายทะเบียน องค์การนักวิชาชีพฯ
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        (.............................................................)
+                    </div>
+                </td>
+                <td>
+                    <div class="sign sign-r">
+                        ลงชื่อ................................................................
+                        ครูที่ปรึกษา องค์การนักวิชาชีพฯ
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        (.............................................................)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="sign">
+                        ลงชื่อ................................................................
+                        นายก องค์การนักวิชาชีพฯ
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        (.............................................................)
+                    </div>
+                </td>
+                <td>
+                    <div class="sign sign-r">
+                        ลงชื่อ................................................................
+                        ประธานกรรมการประเมินผล
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        (.............................................................)
+                    </div>
+                </td>
+            </tr>
+        </table>
+
     </div>
 
 </body>

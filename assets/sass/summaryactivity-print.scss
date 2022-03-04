@@ -50,5 +50,16 @@
     }
 }
 
+.sign-table {
+    width: 22cm;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    
+    .sign {
+        padding-top: 1.8em;
+    }
+}
+
 @media print {
 }

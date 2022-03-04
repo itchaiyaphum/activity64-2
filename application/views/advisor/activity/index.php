@@ -29,10 +29,10 @@
                                     <td><?= $gr->group_name ?></td>
                                     <td><?= $gr->minor_name ?></td>
                                     <td>
-                                        <?= $this->activity_summary->AdvisorIndedxButton($gr->id, $semester->id) ?>
+                                        <?= $this->activity_summary->AdvisorIndedxButton($gr->id, $semester->id, $this->session->user_type) ?>
                                     </td>
                                     <td>
-                                        <?= $this->activity_summary->PrintButton($gr->id, $semester->id) ?>
+                                        <?= $this->activity_summary->PrintButton($gr->id, $semester->id, $this->session->user_type) ?>
                                     </td>
                                 </tr>
                             <?php } ?>

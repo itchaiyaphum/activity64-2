@@ -16,7 +16,7 @@ class Activity_summary extends BaseController
         $data['data'] = $this->activity_summary->index($this->session->user_id);
 
         $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / แบบสรุปการประเมินผลกิจกรรมชมรมวิชาชีพ'));
-        $this->load->view('headdepartment/activity/index', $data);
+        $this->load->view('advisor/activity/index', $data);
         $this->load->view('footer');
     }
     public function activity()
@@ -30,14 +30,14 @@ class Activity_summary extends BaseController
         $data['semester'] = $this->activity_summary->SemesterData($this->input->get('semester_id'));
 
         $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกการประเมินผลกิจกรรมชมรมวิชาชีพ'));
-        $this->load->view('headdepartment/activity/activity', $data);
+        $this->load->view('advisor/activity/activity', $data);
         $this->load->view('footer');
     }
     public function advisor_save()
     {
 
         $this->activity_summary->advisor_save();
-        redirect('headdepartment/activity_summary');
+        redirect('advisor/activity_summary');
     }
     public function report()
     {
