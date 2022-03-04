@@ -37,7 +37,7 @@ class Activity_summary extends BaseController
     {
 
         $this->activity_summary->advisor_save();
-        redirect('advisor/activity_summary');
+        redirect('headdepartment/activity_summary');
     }
     public function report()
     {
