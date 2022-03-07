@@ -57,6 +57,7 @@ $route['about']	= "home/about";
 $route['contact']	= "home/contact";
 $route['help']	= "home/help";
 
+// admin
 $route['admin']	= "admin/home";
 $route['admin/users']	= "admin/adminusers";
 $route['admin/users/edit']	= "admin/adminusers/edit";
@@ -72,7 +73,7 @@ $route['profile']	= "profile/index";
 $route['trainer']	= "trainer/home";
 $route['trainer_restricted_access']	= "home/trainer_restricted_access";
 
-
+// advisor
 $route['advisor/homeroom']	= "advisor/advisorhomeroom";
 $route['advisor/homeroom/activity']	= "advisor/advisorhomeroom/activity";
 $route['advisor/homeroom/activity_save']	= "advisor/advisorhomeroom/activity_save";
@@ -84,10 +85,12 @@ $route['advisor/homeroom/confirm_save']	= "advisor/advisorhomeroom/confirm_save"
 $route['advisor']	= "advisor/home";
 $route['advisor_restricted_access']	= "home/advisor_restricted_access";
 
+// staff
 $route['staff']	= "staff/home";
 $route['staff_restricted_access']	= "home/staff_restricted_access";
 
 
+// headdepartment
 $route['headdepartment/homeroom']	= "headdepartment/headdepartmenthomeroom";
 $route['headdepartment/homeroom/activity']	= "headdepartment/headdepartmenthomeroom/activity";
 $route['headdepartment/homeroom/activity_save']	= "headdepartment/headdepartmenthomeroom/activity_save";
@@ -97,9 +100,12 @@ $route['headdepartment/homeroom/risk_save']	= "headdepartment/headdepartmenthome
 $route['headdepartment/homeroom/confirm']	= "headdepartment/headdepartmenthomeroom/confirm";
 $route['headdepartment/homeroom/confirm_save']	= "headdepartment/headdepartmenthomeroom/confirm_save";
 
+$route['headdepartment/report']	= "headdepartment/headdepartmentreport";
+
 $route['headdepartment']	= "headdepartment/home";
 $route['headdepartment_restricted_access']	= "home/headdepartment_restricted_access";
 
+// headadvisor
 $route['headadvisor']	= "headadvisor/home";
 $route['headadvisor/users']	= "headadvisor/userscontroller";
 $route['headadvisor/users/edit']	= "headadvisor/userscontroller/edit";
@@ -112,6 +118,7 @@ $route['headadvisor/users/restore']	= "headadvisor/userscontroller/restore";
 
 $route['headadvisor_restricted_access']	= "home/headadvisor_restricted_access";
 
+// executive
 $route['executive']	= "executive/home";
 $route['executive_restricted_access']	= "home/executive_restricted_access";
 

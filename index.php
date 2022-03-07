@@ -55,7 +55,7 @@
  */
 $env = 'development';
 switch ($_SERVER ['SERVER_NAME']) {
-    case 'dev.activity64.itchaiyaphum.com' :
+    case 'dev.activity64-2.itchaiyaphum.com' :
         $env = 'development';
         error_reporting ( E_ALL );
         ini_set ( 'display_errors', 'on' );

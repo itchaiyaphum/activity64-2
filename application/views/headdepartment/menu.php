@@ -9,6 +9,11 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('approving');?>">
 		<a href="<?php echo base_url('headdepartment/approving'); ?>"><span class="uk-icon-legal"></span> รับรองการบันทึกกิจกรรมโฮมรูม</a>
 	</li>
+
+	<li class="uk-nav-header">รายงานกิจกรรมโฮมรูป</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('report');?>">
+		<a href="<?php echo base_url('headdepartment/report'); ?>"><i class="uk-icon-pie-chart"></i> รายงานการปฏิบัติหน้าที่</a>
+	</li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('reporthomeroom');?>">
 		<a href="<?php echo base_url('headdepartment/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a>
 	</li>
