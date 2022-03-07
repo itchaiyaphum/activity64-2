@@ -15,6 +15,12 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('approving');?>">
 		<a href="<?php echo base_url('headadvisor/approving'); ?>"><span class="uk-icon-legal"></span> อนุมัติการส่งข้อมูลกิจกรรมโฮมรูม</a>
 	</li>
+
+	<li class="uk-nav-header">รายงานกิจกรรมโฮมรูป</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('report');?>">
+		<a href="<?php echo base_url('headadvisor/report'); ?>"><i class="uk-icon-pie-chart"></i> รายงานการปฏิบัติหน้าที่</a>
+	</li>
+
 </ul>
 <br/>
 <div>
