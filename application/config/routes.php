@@ -116,6 +116,8 @@ $route['headadvisor/users/trash']	= "headadvisor/userscontroller/trash";
 $route['headadvisor/users/delete']	= "headadvisor/userscontroller/delete";
 $route['headadvisor/users/restore']	= "headadvisor/userscontroller/restore";
 
+$route['headadvisor/report']	= "headadvisor/headadvisorreport";
+
 $route['headadvisor_restricted_access']	= "home/headadvisor_restricted_access";
 
 // executive
