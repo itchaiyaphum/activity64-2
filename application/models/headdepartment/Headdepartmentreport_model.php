@@ -3,7 +3,7 @@ if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Headdepartmentapproving_model extends BaseModel
+class Headdepartmentreport_model extends BaseModel
 {
     public $table = null;
     public $table_obedience = null;
@@ -20,7 +20,7 @@ class Headdepartmentapproving_model extends BaseModel
     {
         $sql = "SELECT homerooms.*, semester.name as semester_name FROM homerooms 
                     LEFT JOIN semester ON (homerooms.semester_id=semester.id)
-                    WHERE homerooms.status=1 ORDER BY homerooms.week DESC";
+                    WHERE homerooms.status=1 ORDER BY homerooms.week ASC";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -29,6 +29,14 @@ class Headdepartmentapproving_model extends BaseModel
     public function getAllActionItems()
     {
         $sql = "SELECT * FROM homeroom_actions WHERE status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getSemesterItems()
+    {
+        $sql = "SELECT * FROM semester WHERE status=1";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -62,11 +70,19 @@ class Headdepartmentapproving_model extends BaseModel
 
     public function getApproving($major_id=0)
     {
+        $filter_semester = $this->ci->input->get_post('headdepartment_filter_semester');
+        $filter_type = $this->ci->input->get_post('headdepartment_filter_type');
+
+
         $profile = $this->ci->profile_lib->getData();
         $major_id = $profile->major_id;
 
+
         //get homeroom item
         $homeroom_items = $this->getHomeroomItems();
+
+         //get semester items
+         $semester_items = $this->getSemesterItems();
         
         //get major item
         $this->ci->load->model('admin/major_model', 'admin_major_model');
@@ -87,25 +103,27 @@ class Headdepartmentapproving_model extends BaseModel
 
         $items = array();
 
-        foreach ($homeroom_items as $homeroom) {
-            $item = new stdClass();
-            $item->id               = $homeroom->id;
-            $item->semester_name    = $homeroom->semester_name;
-            $item->week             = $homeroom->week;
-            $item->join_start       = $homeroom->join_start;
-            $item->join_end         = $homeroom->join_end;
-            // $item->is_lock          = $homeroom->is_lock;
-            $item->is_lock_remark   = $homeroom->remark;
-            $item->major_id         = $major_item->id;
-            $item->major_name       = $major_item->major_name;
+        if ($filter_semester=="" || $filter_type=="") {
+            return $items;
+        }
 
-            $item->minors           = array();
+        foreach ($semester_items as $semester) {
+            $item = new stdClass();
+            $item->semester_id          = $semester->id;
+            $item->semester_name        = $semester->name;
+            $item->majors               = array();
+
+            $item_major                 = new stdClass();
+            $item_major->major_id       = $major_item->id;
+            $item_major->major_name     = $major_item->major_name;
+            $item_major->minors         = array();
+
             foreach ($minor_items as $minor) {
                 $item_minor                 = new stdClass();
                 $item_minor->minor_id       = $minor->id;
                 $item_minor->minor_name     = $minor->minor_name;
-
                 $item_minor->groups         = array();
+
                 foreach ($group_items as $group) {
                     if ($group->major_id==$major_item->id && $group->minor_id==$minor->id) {
                         $item_group                     = new stdClass();
@@ -113,6 +131,7 @@ class Headdepartmentapproving_model extends BaseModel
                         $item_group->group_name         = $group->group_name;
 
                         $item_group->advisors           = array();
+
                         foreach ($advisor_group_items as $advisor_group) {
                             if ($advisor_group->group_id==$group->id) {
                                 $item_advisor                       = new stdClass();
@@ -120,34 +139,63 @@ class Headdepartmentapproving_model extends BaseModel
                                 $item_advisor->advisor_type         = $advisor_group->advisor_type;
                                 $item_advisor->firstname            = $advisor_group->firstname;
                                 $item_advisor->lastname             = $advisor_group->lastname;
-                                array_push($item_group->advisors, $item_advisor);
+
+                                $item_advisor->stats_num_homeroom   = count($homeroom_items);
+                                $item_advisor->stats_num_checked_percent    = 0;
+
+                                $item_advisor->homerooms            = array();
+
+                                $tmp_stats_num_checked      = 0;
+
+                                foreach ($homeroom_items as $homeroom) {
+                                        $item_homeroom              = new stdClass();
+                                        $item_homeroom->id          = $homeroom->id;
+                                        $item_homeroom->week        = $homeroom->week;
+                                        $item_homeroom->is_check    = 0;
+                                        $item_homeroom->approving   = array();
+                                        
+                                        foreach ($action_items as $action) {
+                                            if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id && $action->user_id==$advisor_group->advisor_id) {
+                                                $item_approving                         = new stdClass();
+                                                $item_approving->advisor_id             = $action->user_id;
+                                                $item_approving->advisor_type           = $action->user_type;
+                                                $item_approving->advisor_status         = $action->action_status;
+
+                                                $item_homeroom->is_check                = 1;
+                                                $tmp_stats_num_checked                  += 1;
+
+                                                array_push($item_homeroom->approving, $item_approving);
+                                            }
+                                        }
+
+                                        array_push($item_advisor->homerooms, $item_homeroom);
+                                }
+
+                                $item_advisor->stats_num_checked_percent    = ($tmp_stats_num_checked/$item_advisor->stats_num_homeroom)*100;
+
+                                array_push($item_group->advisors, $item_advisor); 
                             }
                         }
 
-                        $item_group->approving           = array();
-                        foreach ($action_items as $action) {
-                            if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id) {
-                                $item_approving                       = new stdClass();
-                                $item_approving->advisor_id           = $action->user_id;
-                                $item_approving->advisor_type         = $action->user_type;
-                                $item_approving->advisor_status       = $action->action_status;
-                                array_push($item_group->approving, $item_approving);
-                            }
-                        }
-
-                        array_push($item_minor->groups, $item_group);
+                         array_push($item_minor->groups, $item_group);
                     }
                 }
-                array_push($item->minors, $item_minor);
+                
+                array_push($item_major->minors, $item_minor);
+                
             }
+
+            array_push($item->majors, $item_major);
+
             array_push($items, $item);
         }
 
         // echo "<pre>";
         // print_r($items);
         // exit();
-        
+
         return $items;
+
     }
 
     public function getConfirm($homeroom_id=0, $group_id=0)

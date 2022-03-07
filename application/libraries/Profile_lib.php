@@ -62,6 +62,7 @@ class Profile_lib
             $profile->firstname = $row->firstname;
             $profile->lastname = $row->lastname;
             $profile->user_id = $row->user_id;
+            $profile->major_id = $row->major_id;
             $profile->college_id = $row->college_id;
             $profile->signature = $row->signature;
         }
