@@ -40,7 +40,7 @@
 				<?php
                 if (count($items)<=0) {
                 ?>
-				<div class="uk-alert uk-alert-danger uk-text-center"><h3>กรุณาเลือก ภาคเรียน และรูปแบบรายงาน ที่ต้องการ</h3></div>
+				<div class="uk-alert uk-alert-danger uk-text-center"><h3>กรุณาเลือก ภาคเรียน สาขาวิชา และรูปแบบรายงาน ที่ต้องการ</h3></div>
 				<?php
                 }
                 ?>
